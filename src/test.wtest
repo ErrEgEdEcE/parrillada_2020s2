@@ -1,3 +1,39 @@
 import comidas.*
 import comensales.*
 import cocina.*
+
+test "Comidas" {
+	const hamburCasera = new HamburguesaDeCarne(tipoDePan = panCasero)
+	const hamburVeggie = new HamburguesaVegetariana(tipoDePan = panDeMasaMadre, legumbre = "garbanzos")
+	assert.equals (hamburCasera.valoracion(), 80)
+	assert.equals (hamburVeggie.valoracion(), 122)
+	
+	const provo = new Provoleta(peso = 190, tieneEspecias = true)
+	assert.that(provo.esEspecial())
+	
+	const asado = new CorteDeCarne(calidad = 10, peso = 250)
+	const entrania = new CorteDeCarne(calidad = 7, peso = 200)
+	const chori = new CorteDeCarne(calidad = 8, peso = 50)
+	const parri1 = new Parrillada(cortesPedidos = [asado, entrania, chori])
+	assert.equals (parri1.valoracion(), 147)
+}
+
+test "Comensales" {
+	const veggie = new Vegetariano(peso = 68500, comidas= [new Provoleta(peso = 190, tieneEspecias = true), new HamburguesaVegetariana(tipoDePan = panDeMasaMadre, legumbre = "garbanzos"), new HamburguesaVegetariana(tipoDePan = panDeMasaMadre, legumbre = "garbanzos")])
+	assert.that(veggie.estaSatisfecho())
+	
+	const asado = new CorteDeCarne(calidad = 10, peso = 250)
+	const entrania = new CorteDeCarne(calidad = 7, peso = 200)
+	const chori = new CorteDeCarne(calidad = 8, peso = 50)
+	const parri1 = new Parrillada(cortesPedidos = [asado, entrania, chori])
+	const popular = new Popular(peso = 85000, comidas= [parri1])
+	assert.notThat(popular.estaSatisfecho())
+	
+	const paladarFino = new PaladarFino(peso=75000, comidas=[])
+	const hambur1= new HamburguesaDeCarne(tipoDePan = panDeMasaMadre)
+	const hambur2= new HamburguesaDeCarne(tipoDePan = panCasero)
+	assert.that(paladarFino.leAgrada(hambur1))
+	assert.notThat(paladarFino.leAgrada(hambur2))
+	
+}
+
